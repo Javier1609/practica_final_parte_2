@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b658ad1-9b67-45bc-897e-f254e4090de2" name="Changes" comment=".">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Aplication/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Aplication/MainFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Aplication/Panel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Aplication/Panel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Laboratorio/Manejo_experimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Laboratorio/Manejo_experimento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Laboratorio/experimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Laboratorio/experimento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Laboratorio/poblacion_bacteria_window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Laboratorio/poblacion_bacteria_window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +57,7 @@
       <updated>1716297228218</updated>
       <workItem from="1716297229523" duration="4000" />
       <workItem from="1716367795750" duration="15261000" />
-      <workItem from="1716404056167" duration="312000" />
+      <workItem from="1716404056167" duration="628000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -81,7 +75,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716372565736</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary=".">
+      <option name="closed" value="true" />
+      <created>1716404519018</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1716404519018</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

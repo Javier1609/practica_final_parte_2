@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.List;
 import java.util.Scanner;
 
 public class Panel extends JPanel {
@@ -47,38 +45,13 @@ public class Panel extends JPanel {
 
                 JFileChooser fileChooser;
                 int userSelection;
+                String biologistName; // Definir aquí
+                poblacion_bacteria_window poblacionBacteriaWindow; // Definir aquí
 
                 switch (selectedAction) {
                     case "Agregar nuevo experimento":
-                        String biologistName = JOptionPane.showInputDialog(null, "Ingrese el nombre del biólogo:", "Nuevo experimento", JOptionPane.QUESTION_MESSAGE);
-                        if (biologistName != null && !biologistName.trim().isEmpty()) {
-                            String experimentName = JOptionPane.showInputDialog(null, "Ingrese el nombre del nuevo experimento:", "Nuevo experimento", JOptionPane.QUESTION_MESSAGE);
-                            if (experimentName != null && !experimentName.trim().isEmpty()) {
-                                experimento experiment = null;
-                                try {
-                                    experiment = new experimento(experimentName, "Description here");
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                                manejoExperimento.addExperimento(biologistName, experiment);
-
-                                // Crear un archivo .txt para el experimento
-                                fileChooser = new JFileChooser();
-                                fileChooser.setDialogTitle("Seleccione dónde guardar el experimento");
-                                userSelection = fileChooser.showSaveDialog(null);
-
-                                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                                    File fileToSave = fileChooser.getSelectedFile();
-                                    try (PrintWriter out = new PrintWriter(fileToSave + ".txt")) {
-                                        out.println("Nombre del experimento: " + experimentName);
-                                        out.println("Biologo: " + biologistName);
-                                        out.println("Descripción: Description here");
-                                    } catch (FileNotFoundException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        }
+                        poblacionBacteriaWindow = new poblacion_bacteria_window(manejoExperimento);
+                        poblacionBacteriaWindow.setVisible(true);
                         break;
 
                     case "Borrar experimento":
@@ -98,7 +71,7 @@ public class Panel extends JPanel {
                             File fileToOpen = fileChooser.getSelectedFile();
                             try (Scanner in = new Scanner(fileToOpen)) {
                                 String experimentName = in.nextLine();
-                                biologistName = in.nextLine();
+                                biologistName = in.nextLine(); // Usar aquí
                                 String description = in.nextLine();
                                 experimento experiment = new experimento(experimentName, description);
                                 manejoExperimento.addExperimento(biologistName, experiment);
@@ -107,11 +80,13 @@ public class Panel extends JPanel {
                             }
                         }
                         break;
+
                     case "Ver información de la población":
-                        poblacion_bacteria_window poblacionBacteriaWindow = new poblacion_bacteria_window(manejoExperimento);
+                        poblacionBacteriaWindow = new poblacion_bacteria_window(manejoExperimento);
                         poblacionBacteriaWindow.setLocationRelativeTo(null);
                         poblacionBacteriaWindow.setVisible(true);
                         break;
+
                     case "Editar experimento":
                         String biologistNameToEdit = JOptionPane.showInputDialog(null, "Ingrese el nombre del biólogo:", "Editar experimento", JOptionPane.QUESTION_MESSAGE);
                         String experimentNameToEdit = JOptionPane.showInputDialog(null, "Ingrese el nombre del experimento a editar:", "Editar experimento", JOptionPane.QUESTION_MESSAGE);
