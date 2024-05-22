@@ -1,6 +1,6 @@
   
   https://github.com/Javier1609/practica_final_parte_2.git
-**Índice**
+
 
 1. [Descripción del Proyecto](#descripcion-del-proyecto)
 2. [Características del Proyecto](#caracteristicas-del-proyecto)
