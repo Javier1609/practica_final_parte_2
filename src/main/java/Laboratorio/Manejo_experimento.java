@@ -5,10 +5,12 @@ import java.util.*;
 public class Manejo_experimento {
     private Map<String, List<experimento>> experimentosPorBiologo;
     private List<poblacion_bacteria> poblaciones;
+    private experimento experimentoActual;
 
     public Manejo_experimento() {
         this.experimentosPorBiologo = new HashMap<>();
         this.poblaciones = new ArrayList<>();
+        this.experimentoActual = null;
     }
 
     public void addExperimento(String username, experimento experimento) {
@@ -16,6 +18,7 @@ public class Manejo_experimento {
             experimentosPorBiologo.put(username, new ArrayList<>());
         }
         experimentosPorBiologo.get(username).add(experimento);
+        this.experimentoActual = experimento;
     }
 
     public List<experimento> getExperimentos(String username) {
@@ -48,5 +51,10 @@ public class Manejo_experimento {
 
     public void ordenarPorNumeroBacterias() {
         Collections.sort(poblaciones, Comparator.comparingInt(p -> p.getBacterias().size()));
+    }
+
+
+    public experimento getExperimentoActual() {
+        return this.experimentoActual;
     }
 }

@@ -1,114 +1,126 @@
 package Laboratorio;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.io.*;
 
 public class poblacion_bacteria_window extends JFrame {
+    private JTextField nombreExperimentoField, biologoField;
+    private JButton algoritmoComida1Button, algoritmoComida2Button, algoritmoComida3Button;
+    private JButton nuevoProyectoButton, abrirProyectoButton, editarProyectoButton;
+    private JTextArea anotacionesArea;
     private Manejo_experimento manejoExperimento;
-    private JTable table;
-    private DefaultTableModel model;
-    private JScrollPane scrollPane;
-    private JTextField nombreField, diasField, biologoField;
-    private JComboBox<String> algoritmoComidaComboBox;
-    private JButton ordenarFechaInicioButton, ordenarNombreButton, ordenarNumeroBacteriasButton, ejecutarExperimentoButton;
+    private experimento experimentoActual;
 
     public poblacion_bacteria_window(Manejo_experimento manejoExperimento) {
         this.manejoExperimento = manejoExperimento;
+        this.experimentoActual = manejoExperimento.getExperimentoActual();
 
         setTitle("Poblaciones de Bacterias");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        String[] columnNames = {"Nombre", "Fecha de Inicio", "Número de Bacterias"};
-        model = new DefaultTableModel(columnNames, 0);
-        table = new JTable(model);
-        scrollPane = new JScrollPane(table);
-        add(scrollPane, BorderLayout.CENTER);
-
         JPanel panel = new JPanel();
-        nombreField = new JTextField(10);
-        diasField = new JTextField(10);
-        biologoField = new JTextField(10);
-        algoritmoComidaComboBox = new JComboBox<>(new String[]{"Algoritmo 1", "Algoritmo 2", "Algoritmo 3"});
-        panel.add(new JLabel("Nombre de la población:"));
-        panel.add(nombreField);
-        panel.add(new JLabel("Días:"));
-        panel.add(diasField);
-        panel.add(new JLabel("Biólogo:"));
+        nombreExperimentoField = new JTextField(20);
+        biologoField = new JTextField(20);
+        panel.add(new JLabel("Nombre del experimento:"));
+        panel.add(nombreExperimentoField);
+        panel.add(new JLabel("Nombre del biólogo:"));
         panel.add(biologoField);
-        panel.add(new JLabel("Algoritmo de Comida:"));
-        panel.add(algoritmoComidaComboBox);
 
-        ordenarFechaInicioButton = new JButton("Ordenar por Fecha de Inicio");
-        ordenarNombreButton = new JButton("Ordenar por Nombre");
-        ordenarNumeroBacteriasButton = new JButton("Ordenar por Número de Bacterias");
-        ejecutarExperimentoButton = new JButton("Ejecutar Experimento");
+        algoritmoComida1Button = new JButton("Algoritmo de Comida 1");
+        algoritmoComida2Button = new JButton("Algoritmo de Comida 2");
+        algoritmoComida3Button = new JButton("Algoritmo de Comida 3");
 
-        panel.add(ordenarFechaInicioButton);
-        panel.add(ordenarNombreButton);
-        panel.add(ordenarNumeroBacteriasButton);
-        panel.add(ejecutarExperimentoButton);
+        panel.add(algoritmoComida1Button);
+        panel.add(algoritmoComida2Button);
+        panel.add(algoritmoComida3Button);
 
-        add(panel, BorderLayout.SOUTH);
+        nuevoProyectoButton = new JButton("Nuevo Proyecto");
+        abrirProyectoButton = new JButton("Abrir Proyecto");
+        editarProyectoButton = new JButton("Editar Proyecto");
 
-        updateTable();
+        panel.add(nuevoProyectoButton);
+        panel.add(abrirProyectoButton);
+        panel.add(editarProyectoButton);
 
-        ordenarFechaInicioButton.addActionListener(new ActionListener() {
+        anotacionesArea = new JTextArea(5, 20);
+        panel.add(new JLabel("Anotaciones:"));
+        panel.add(new JScrollPane(anotacionesArea));
+
+        add(panel, BorderLayout.CENTER);
+
+        algoritmoComida1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                manejoExperimento.ordenarPorFechaInicio();
-                updateTable();
+                Comida comida = experimentoActual.getComida();
+                comida.setTipoPatron(Comida.TipoPatron.INCREMENTO_DECREMENTO);
             }
         });
 
-        ordenarNombreButton.addActionListener(new ActionListener() {
+        algoritmoComida2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                manejoExperimento.ordenarPorNombre();
-                updateTable();
+                Comida comida = experimentoActual.getComida();
+                comida.setTipoPatron(Comida.TipoPatron.DECREMENTO_INCREMENTO);
             }
         });
 
-        ordenarNumeroBacteriasButton.addActionListener(new ActionListener() {
+        algoritmoComida3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                manejoExperimento.ordenarPorNumeroBacterias();
-                updateTable();
+                Comida comida = experimentoActual.getComida();
+                comida.setTipoPatron(Comida.TipoPatron.CONSTANTE);
             }
         });
 
-        ejecutarExperimentoButton.addActionListener(new ActionListener() {
+        nuevoProyectoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nombre = nombreField.getText();
-                int dias = Integer.parseInt(diasField.getText());
-                String biologo = biologoField.getText();
-                String algoritmoComida = (String) algoritmoComidaComboBox.getSelectedItem();
-                experimento experimento = new experimento(nombre, dias);
-                // Aquí puedes agregar el código para seleccionar el algoritmo de comida en función de la selección en el JComboBox
-                manejoExperimento.addExperimento(biologo, experimento);
-                manejoExperimento.ejecutarExperimento(biologo, experimento);
-                updateTable();
+                String nombreProyecto = nombreExperimentoField.getText();
+                String nombreBiologo = biologoField.getText();
+                try (PrintWriter out = new PrintWriter(new FileWriter(nombreProyecto + ".txt"))) {
+                    out.println(nombreBiologo);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        abrirProyectoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    try (BufferedReader in = new BufferedReader(new FileReader(selectedFile))) {
+                        String nombreBiologo = in.readLine();
+                        if (biologoField.getText().equals(nombreBiologo)) {
+                            // Aquí puedes agregar el código para cargar el proyecto desde el archivo
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No tienes permiso para abrir este proyecto.");
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        editarProyectoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nuevoNombreProyecto = JOptionPane.showInputDialog("Introduce el nuevo nombre del proyecto:");
+                if (nuevoNombreProyecto != null) {
+                    nombreExperimentoField.setText(nuevoNombreProyecto);
+                }
             }
         });
 
         setVisible(true);
-    }
-
-    private void updateTable() {
-        model.setRowCount(0); // Limpiar la tabla
-
-        for (poblacion_bacteria_window : manejoExperimento.getExperimentos()) {
-            Object[] o = new Object[3];
-            o[0] = poblacion.getNombre();
-            o[1] = poblacion.getFechaInicio();
-            o[2] = poblacion.getBacterias().size();
-            model.addRow(o);
-        }
     }
 }
