@@ -31,13 +31,19 @@ public class poblacion_bacteria_window extends JFrame {
         panel.add(new JLabel("Nombre del biólogo:"));
         panel.add(biologoField);
 
-        algoritmoComida1Button = new JButton("Algoritmo de Comida 1");
-        algoritmoComida2Button = new JButton("Algoritmo de Comida 2");
-        algoritmoComida3Button = new JButton("Algoritmo de Comida 3");
+        algoritmoComida1Button = new JButton("Incremento-Decremento");
+        algoritmoComida2Button = new JButton("Decremento-Incremento");
+        algoritmoComida3Button = new JButton("Constante");
 
         panel.add(algoritmoComida1Button);
         panel.add(algoritmoComida2Button);
         panel.add(algoritmoComida3Button);
+
+        JButton ordenarAlfabeticoButton = new JButton("Ordenar Alfabéticamente");
+        JButton ordenarCronologicoButton = new JButton("Ordenar Cronológicamente");
+
+        panel.add(ordenarAlfabeticoButton);
+        panel.add(ordenarCronologicoButton);
 
         nuevoProyectoButton = new JButton("Nuevo Proyecto");
         abrirProyectoButton = new JButton("Abrir Proyecto");
@@ -74,6 +80,22 @@ public class poblacion_bacteria_window extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Comida comida = experimentoActual.getComida();
                 comida.setTipoPatron(Comida.TipoPatron.CONSTANTE);
+            }
+        });
+
+        ordenarAlfabeticoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                manejoExperimento.ordenarExperimentos(biologoField.getText(), Manejo_experimento.Ordenamiento.ALFABETICO);
+                // Aquí puedes agregar el código para actualizar la interfaz de usuario con los experimentos ordenados
+            }
+        });
+
+        ordenarCronologicoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                manejoExperimento.ordenarExperimentos(biologoField.getText(), Manejo_experimento.Ordenamiento.CRONOLOGICO);
+                // Aquí puedes agregar el código para actualizar la interfaz de usuario con los experimentos ordenados
             }
         });
 

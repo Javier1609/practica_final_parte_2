@@ -7,6 +7,12 @@ public class Manejo_experimento {
     private List<poblacion_bacteria> poblaciones;
     private experimento experimentoActual;
 
+    public enum Ordenamiento {
+        ALFABETICO,
+        CRONOLOGICO,
+        // Agrega aquí otros tipos de ordenamiento si los necesitas
+    }
+
     public Manejo_experimento() {
         this.experimentosPorBiologo = new HashMap<>();
         this.poblaciones = new ArrayList<>();
@@ -23,6 +29,25 @@ public class Manejo_experimento {
 
     public List<experimento> getExperimentos(String username) {
         return experimentosPorBiologo.get(username);
+    }
+
+    public void deleteExperimento(String username, String experimentName) {
+        List<experimento> experimentos = experimentosPorBiologo.get(username);
+        if (experimentos != null) {
+            experimentos.removeIf(experimento -> experimento.getNombre().equals(experimentName));
+        }
+    }
+
+    public experimento getExperimento(String username, String experimentName) {
+        List<experimento> experimentos = experimentosPorBiologo.get(username);
+        if (experimentos != null) {
+            for (experimento experiment : experimentos) {
+                if (experiment.getNombre().equals(experimentName)) {
+                    return experiment;
+                }
+            }
+        }
+        return null;
     }
 
     public void setPatronComida(String username, experimento experimento, Comida comida) {
@@ -53,6 +78,20 @@ public class Manejo_experimento {
         Collections.sort(poblaciones, Comparator.comparingInt(p -> p.getBacterias().size()));
     }
 
+    public void ordenarExperimentos(String username, Ordenamiento ordenamiento) {
+        List<experimento> experimentos = experimentosPorBiologo.get(username);
+        if (experimentos != null) {
+            switch (ordenamiento) {
+                case ALFABETICO:
+                    Collections.sort(experimentos, Comparator.comparing(experimento::getNombre));
+                    break;
+                case CRONOLOGICO:
+                    Collections.sort(experimentos, Comparator.comparing(experimento::getFechaInicio));
+                    break;
+                // Agrega aquí otros casos para otros tipos de ordenamiento si los necesitas
+            }
+        }
+    }
 
     public experimento getExperimentoActual() {
         return this.experimentoActual;
