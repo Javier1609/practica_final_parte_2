@@ -7,12 +7,13 @@ import java.awt.event.ActionListener;
 import java.io.*;
 
 public class poblacion_bacteria_window extends JFrame {
-    private JTextField nombreExperimentoField, biologoField;
+    private JTextField nombreExperimentoField, biologoField, fechaInicioField, fechaFinField, temperaturaField, numBacteriasField, humedadField, cantidadComidaField;
     private JButton algoritmoComida1Button, algoritmoComida2Button, algoritmoComida3Button;
     private JButton nuevoProyectoButton, abrirProyectoButton, editarProyectoButton;
     private JTextArea anotacionesArea;
     private Manejo_experimento manejoExperimento;
     private experimento experimentoActual;
+    private JLabel algoritmoComidaLabel;
 
     public poblacion_bacteria_window(Manejo_experimento manejoExperimento) {
         this.manejoExperimento = manejoExperimento;
@@ -26,10 +27,29 @@ public class poblacion_bacteria_window extends JFrame {
         JPanel panel = new JPanel();
         nombreExperimentoField = new JTextField(20);
         biologoField = new JTextField(20);
+        fechaInicioField = new JTextField(20);
+        fechaFinField = new JTextField(20);
+        temperaturaField = new JTextField(20);
+        numBacteriasField = new JTextField(20);
+        humedadField = new JTextField(20);
+        cantidadComidaField = new JTextField(20);
+
         panel.add(new JLabel("Nombre del experimento:"));
         panel.add(nombreExperimentoField);
         panel.add(new JLabel("Nombre del biólogo:"));
         panel.add(biologoField);
+        panel.add(new JLabel("Fecha de inicio del proyecto:"));
+        panel.add(fechaInicioField);
+        panel.add(new JLabel("Fecha de fin del proyecto:"));
+        panel.add(fechaFinField);
+        panel.add(new JLabel("Temperatura de las bacterias:"));
+        panel.add(temperaturaField);
+        panel.add(new JLabel("Número de bacterias:"));
+        panel.add(numBacteriasField);
+        panel.add(new JLabel("Humedad:"));
+        panel.add(humedadField);
+        panel.add(new JLabel("Cantidad de comida:"));
+        panel.add(cantidadComidaField);
 
         algoritmoComida1Button = new JButton("Incremento-Decremento");
         algoritmoComida2Button = new JButton("Decremento-Incremento");
@@ -62,24 +82,42 @@ public class poblacion_bacteria_window extends JFrame {
         algoritmoComida1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Comida comida = experimentoActual.getComida();
-                comida.setTipoPatron(Comida.TipoPatron.INCREMENTO_DECREMENTO);
+                if (experimentoActual != null) {
+                    Comida comida = experimentoActual.getComida();
+                    if (comida != null) {
+                        comida.setTipoPatron(Comida.TipoPatron.INCREMENTO_DECREMENTO);
+                        algoritmoComidaLabel.setText("Algoritmo de comida: Incremento-Decremento");
+                        // Aquí puedes agregar el código para desplegar el menú con las características del algoritmo de comida
+                    }
+                }
             }
         });
 
         algoritmoComida2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Comida comida = experimentoActual.getComida();
-                comida.setTipoPatron(Comida.TipoPatron.DECREMENTO_INCREMENTO);
+                if (experimentoActual != null) {
+                    Comida comida = experimentoActual.getComida();
+                    if (comida != null) {
+                        comida.setTipoPatron(Comida.TipoPatron.DECREMENTO_INCREMENTO);
+                        algoritmoComidaLabel.setText("Algoritmo de comida: Decremento-Incremento");
+                        // Aquí puedes agregar el código para desplegar el menú con las características del algoritmo de comida
+                    }
+                }
             }
         });
 
         algoritmoComida3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Comida comida = experimentoActual.getComida();
-                comida.setTipoPatron(Comida.TipoPatron.CONSTANTE);
+                if (experimentoActual != null) {
+                    Comida comida = experimentoActual.getComida();
+                    if (comida != null) {
+                        comida.setTipoPatron(Comida.TipoPatron.CONSTANTE);
+                        algoritmoComidaLabel.setText("Algoritmo de comida: Constante");
+                        // Aquí puedes agregar el código para desplegar el menú con las características del algoritmo de comida
+                    }
+                }
             }
         });
 
